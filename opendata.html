@@ -1,0 +1,45 @@
+
+<html>
+<head><meta http-equiv="content-type" content="text/html; charset=utf-8">
+<title>淡江大學 2021雲端運算課程 OpenData</title>
+</head>
+<body>
+ <script type="text/JavaScript">
+
+ 
+  
+fetch('https://tcgbusfs.blob.core.windows.net/dotapp/youbike/v2/youbike_immediate.json', { 
+  method: 'GET'
+})
+.then(function(response) { return response.json(); })
+.then(function(json) {
+  // use the json
+  var tableString="<table border=1><tr><td style='text-align:center;'>站名</td><td style='text-align:center;'>可借車輛</td><td style='text-align:center;'>總車輛</td><td style='text-align:center;'>Latitude</td><td style='text-align:center;'>Longitude</td></tr>";
+  for(var i=0;i<json.length;i++)
+  {  
+    var station=json[i];
+    tableString +="<tr><td style='color:blue'>"+station.sna+"</td><td style='color:red;text-align:center;'>"+station.sbi+"</td><td style='color:green;text-align:center;'>"+station.tot+"</td><td style='color:orange;text-align:center;'>"+station.lat+"</td><td style='color:orange;text-align:center;'>"+station.lng+"</td></tr>";
+
+    console.log(station.sna+"("+station.sbi+"/"+station.tot+")");
+    /*if(station.sbi==0){
+    document.write("<span style='color:red;'>"+station.sna+"("+station.sbi+"/"+station.tot+")<br/>");
+    }
+    else{
+    document.write("<span style='color:blue;'>"+station.sna+"("+station.sbi+"/"+station.tot+")<br/>");
+    
+    }*/
+  }
+  tableString +="</table>";
+  var tableElement=document.getElementById("station");
+  tableElement.innerHTML=tableString;
+  //document.write(tableString); 
+
+  
+});
+  </script>
+  <h1 style='text-align:center;'> Yoobike Data </h1>
+  <p align="center">
+ <div  id="station"></div>
+  </p>
+</body>
+</html>
